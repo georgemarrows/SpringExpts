@@ -24,6 +24,11 @@ To run tests
 - (maybe) simple UI
 - (maybe) separate services
 
+# Todos
+- (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
+  RESOLVED - looks like it's a dev env thing. Doesn't leak info when running under integration tests.
+
+
 # Tech notes
 
 ## Spring
@@ -33,3 +38,11 @@ https://spring.io/guides/gs/spring-boot/
 
 ### Spring & Gradle
 https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/
+
+### Logging
+https://www.baeldung.com/spring-boot-logging
+
+
+## REST / URL design
+
+This is a thoughtful article on moving beyond simple CRUD for APIs: https://blog.palantir.com/rethinking-crud-for-rest-api-designs-a2a8287dc2af
