@@ -49,6 +49,6 @@ public class AccountControllerIntegrationTest {
 		var request = new HttpEntity<String>(accountJson.toString(), headers);
 
         var response = template.postForEntity("/api/account", request, String.class);
-        assertThat(response.getBody()).isEqualTo("success");
+        assertThat(response.getBody()).isEqualTo("success WRONG");
     }
 }
