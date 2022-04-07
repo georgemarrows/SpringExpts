@@ -17,12 +17,13 @@ To run tests
 - `./gradlew test`
 
 # Outline plan
-- shell / walking skeleton for requests (hardcoded data) + integration tests 
-- CI/CD using Github Actions
+- DONE shell / walking skeleton for requests (hardcoded data) + integration tests 
+- DONE CI/CD using Github Actions
 - notes on patterns for financial applications (accounts / transactions)
-- flesh out domain model + unit tests
+- flesh out domain model + unit/integration tests
 - (maybe) simple UI
 - (maybe) separate services
+- (maybe) report coverage to Codecov
 
 # Todos
 - (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
