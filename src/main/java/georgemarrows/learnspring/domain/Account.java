@@ -6,9 +6,20 @@ import java.math.BigDecimal;
 // Why? Because being a root implies local entities are read / saved en masse
 // and that doesn't work for unbounded objects like transactions
 public class Account {
-    // listTransactions()
+
+    private final String id;
+
+    public Account(String id) {
+        this.id = id;
+    }
+
+    public String id() {
+        return id;
+    }
+
     public void credit(Account from, BigDecimal amount) {
 
     }
+
 }
 

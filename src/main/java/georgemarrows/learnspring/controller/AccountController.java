@@ -26,8 +26,9 @@ public class AccountController {
 
 	private final AccountService accountService;
 
-	public AccountController() {
-        this.accountService = new AccountService();
+	@Autowired
+	public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
 	public record Account(String customerId, BigDecimal initialCredit) {
