@@ -21,7 +21,9 @@ public class AccountControllerIntegrationTest {
     @Test
     public void getAccount() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/api/account?customerId={custId}", String.class, "abcdef");
-        assertThat(response.getBody()).isEqualTo("customer data data to be sent here");
+        assertThat(response.getBody()).isEqualTo(
+			"[{'transactionId':'123','accountFromId':'MYACCOUNT456','accountToId':'YOURACCOUNT678','amount':100,'currentBalance':2100}]".replace("'", "\"")
+		);
     }
 
     @Test
