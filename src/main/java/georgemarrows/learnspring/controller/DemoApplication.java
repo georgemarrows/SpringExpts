@@ -1,4 +1,4 @@
-package georgemarrows.learnspring.demo;
+package georgemarrows.learnspring.controller;
 
 import java.util.Arrays;
 
