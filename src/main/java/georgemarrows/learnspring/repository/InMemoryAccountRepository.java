@@ -20,8 +20,8 @@ public class InMemoryAccountRepository implements AccountRepository {
     Map<String, Transaction> txnStore = new HashMap<>();
 
     {
-        var txn = new Transaction("123", "MYACCOUNT456", "YOURACCOUNT678", BigDecimal.valueOf(100), BigDecimal.valueOf(2100));
-        txnStore.put(txn.transactionId(), txn);
+        var txn = Transaction.newCrediting("YOURACCOUNT678", BigDecimal.valueOf(100));
+        txnStore.put(txn.id(), txn);
     }
 
     public Optional<Account> findById(String accountId) {
