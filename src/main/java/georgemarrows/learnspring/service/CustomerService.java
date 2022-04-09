@@ -9,6 +9,7 @@ import georgemarrows.learnspring.domain.Account;
 import georgemarrows.learnspring.domain.AccountRepository;
 import georgemarrows.learnspring.domain.Customer;
 import georgemarrows.learnspring.domain.CustomerRepository;
+import georgemarrows.learnspring.domain.Transaction;
 
 @Component
 public class CustomerService {
@@ -28,12 +29,14 @@ public class CustomerService {
     public void createAccount(String customerId, BigDecimal initialCredit) {
         Customer c = getCustomer(customerId);
         Account a = c.createAccount();
-        // Transaction t = a.credit(initialCredit);
+        Transaction t = a.credit(initialCredit);
         
-        // TODO in a transaction
+        // TODO in a database transaction
         customerRepository.save(c);
         accountRepository.save(a);
-        // accountRepository.save(t);
+        if (t != null) {
+            accountRepository.save(t);
+        }
     }
 
     private Customer getCustomer(String customerId) {

@@ -32,21 +32,25 @@ public class InMemoryAccountRepository implements AccountRepository {
         store.put(account.id(), account);
     }
 
-    public List<Transaction> transactions(String accountId) {
-        return txnStore.
-            values().
-            stream().
-            filter(
-                t -> (t.accountFromId().equals(accountId) || t.accountToId() == accountId)
-            ).toList();
-    }
-
     public List<Account> listForCustomer(String customerId) {
         return store.
             values().
             stream().
             filter(
                 acc -> acc.customerId() == customerId
+            ).toList();
+    }
+ 
+    public void save(Transaction transaction) {
+        txnStore.put(transaction.id(), transaction);
+    }
+
+    public List<Transaction> transactions(String accountId) {
+        return txnStore.
+            values().
+            stream().
+            filter(
+                t -> (t.accountFromId().equals(accountId) || t.accountToId() == accountId)
             ).toList();
     }
 }

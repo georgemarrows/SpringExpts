@@ -31,8 +31,13 @@ public class Account {
 		return customerId;
 	}
 
-    public void credit(BigDecimal amount) {
+    public Transaction credit(BigDecimal amount) {
         // TODO accounting: this should reference the account being debited!
+        if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            return Transaction.newCrediting(id(), amount);
+        } else {
+            return null;
+        }
     }
 
 }
