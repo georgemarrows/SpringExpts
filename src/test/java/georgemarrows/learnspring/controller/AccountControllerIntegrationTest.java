@@ -25,7 +25,7 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void getAccount() throws Exception {
-        ResponseEntity<String> response = template.getForEntity("/api/account?customerId={custId}", String.class, "abcdef");
+		ResponseEntity<String> response = template.getForEntity("/api/account?customerId={custId}", String.class, "abcdef");
 
 		Map<String,Object>[] result = new ObjectMapper().readValue(response.getBody(), HashMap[].class);
 

@@ -36,7 +36,7 @@ public class AccountController {
 	@GetMapping
 	public List<Transaction> get(@RequestParam String customerId) {
 		logger.warn("GET /api/account received " + customerId);
-		return accountService.listTransactions("slush fund");
+		return accountService.listTransactions(Transaction.dummyFromAccountId);
 	}
 
 	@PostMapping

@@ -10,9 +10,11 @@ import java.util.UUID;
  * DDD: is this a Value? You can't usually update a transaction once it's posted.
  */
 public class Transaction {
+
+    public static final String dummyFromAccountId = "slush fund"; // TODO
     
     // TODO these seem to need to be public to allow them to be serialised
-    // automatically by @RestController. That's less than ideal!
+    // automatically by @RestController. That's bad!
     public String transactionId;
     public String accountFromId;
     public String accountToId;
@@ -28,7 +30,7 @@ public class Transaction {
     static public Transaction newCrediting(String accountToId, BigDecimal amount) {
         return new Transaction(
             UUID.randomUUID().toString(),
-            "slush fund",
+            dummyFromAccountId,
             accountToId,
             amount
         );
