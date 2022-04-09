@@ -17,15 +17,17 @@ import georgemarrows.learnspring.repository.InMemoryCustomerRepository;
 
 public class CustomerServiceTest {
 
+    CustomerRepository customerRepository = new InMemoryCustomerRepository();
+    AccountRepository accountRepository = new InMemoryAccountRepository();
+    Customer c = Customer.newWithName("George", "Marrows");
+    {
+        customerRepository.save(c);
+    }
+
     @Test
     public void createAccountWithZeroBalance() {
     
         // Given
-        CustomerRepository customerRepository = new InMemoryCustomerRepository();
-        AccountRepository accountRepository = new InMemoryAccountRepository();
-        Customer c = Customer.newWithName("George", "Marrows");
-        customerRepository.save(c);
-
         CustomerService cs = new CustomerService(customerRepository, accountRepository);
 
         // When we create an account for the customer with zero balance
@@ -41,13 +43,6 @@ public class CustomerServiceTest {
         // .. and there are no transactions
         List<Transaction> transactions = accountRepository.transactions(createdAccount.id());
         assertThat(transactions.size()).isEqualTo(0);
-
-        // AccountService as = new AccountService(new InMemoryAccountRepository());
-        // List<Transaction> txns = as.listTransactions("slush fund");
-
-        // assertThat(txns.get(0).amount()).isEqualTo("100");
-        // assertThat(txns.get(0).accountFromId()).isEqualTo("slush fund");
-        // assertThat(txns.get(0).accountToId()).isEqualTo("YOURACCOUNT678");
     }
 
     @Test
@@ -55,11 +50,6 @@ public class CustomerServiceTest {
         final BigDecimal amountToCredit = new BigDecimal(1000);
 
         // Given
-        CustomerRepository customerRepository = new InMemoryCustomerRepository();
-        AccountRepository accountRepository = new InMemoryAccountRepository();
-        Customer c = Customer.newWithName("George", "Marrows");
-        customerRepository.save(c);
-
         CustomerService cs = new CustomerService(customerRepository, accountRepository);
 
         // When we create an account for the customer with zero balance
@@ -79,13 +69,5 @@ public class CustomerServiceTest {
         Transaction createdTransaction = transactions.get(0);
         assertThat(createdTransaction.accountToId()).isEqualTo(createdAccount.id());
         assertThat(createdTransaction.amount()).isEqualTo(amountToCredit);
-        
-
-        // AccountService as = new AccountService(new InMemoryAccountRepository());
-        // List<Transaction> txns = as.listTransactions("slush fund");
-
-        // assertThat(txns.get(0).amount()).isEqualTo("100");
-        // assertThat(txns.get(0).accountFromId()).isEqualTo("slush fund");
-        // assertThat(txns.get(0).accountToId()).isEqualTo("YOURACCOUNT678");
     }
 }
