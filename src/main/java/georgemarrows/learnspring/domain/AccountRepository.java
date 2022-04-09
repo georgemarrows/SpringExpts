@@ -10,5 +10,5 @@ public interface AccountRepository {
     List<Account> listForCustomer(String id);
     
     void save(Transaction transaction);
-    List<Transaction> transactions(String accountId);  // TODO listForTransactions
+    List<Transaction> listTransactionsForAccount(String accountId);
 }

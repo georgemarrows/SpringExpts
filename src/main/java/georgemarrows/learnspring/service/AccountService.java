@@ -24,7 +24,7 @@ public class AccountService {
         // get account
         // ask account for transactions
         // TODO we don't have a good DDD home yet for fetching transactions
-        return accountRepository.transactions(accountId);
+        return accountRepository.listTransactionsForAccount(accountId);
     }
 
 }

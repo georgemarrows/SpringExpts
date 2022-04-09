@@ -45,7 +45,7 @@ public class InMemoryAccountRepository implements AccountRepository {
         txnStore.put(transaction.id(), transaction);
     }
 
-    public List<Transaction> transactions(String accountId) {
+    public List<Transaction> listTransactionsForAccount(String accountId) {
         return txnStore.
             values().
             stream().

@@ -41,7 +41,7 @@ public class CustomerServiceTest {
         assertThat(createdAccount.customerId()).isEqualTo(c.id());
 
         // .. and there are no transactions
-        List<Transaction> transactions = accountRepository.transactions(createdAccount.id());
+        List<Transaction> transactions = accountRepository.listTransactionsForAccount(createdAccount.id());
         assertThat(transactions.size()).isEqualTo(0);
     }
 
@@ -63,7 +63,7 @@ public class CustomerServiceTest {
         assertThat(createdAccount.customerId()).isEqualTo(c.id());
         
         // .. and there is a transaction for the credit
-        List<Transaction> transactions = accountRepository.transactions(createdAccount.id());
+        List<Transaction> transactions = accountRepository.listTransactionsForAccount(createdAccount.id());
 
         assertThat(transactions.size()).isEqualTo(1);
         Transaction createdTransaction = transactions.get(0);
