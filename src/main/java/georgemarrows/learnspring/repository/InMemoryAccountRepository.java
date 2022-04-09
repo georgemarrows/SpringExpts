@@ -40,4 +40,13 @@ public class InMemoryAccountRepository implements AccountRepository {
                 t -> (t.accountFromId().equals(accountId) || t.accountToId() == accountId)
             ).toList();
     }
+
+    public List<Account> listForCustomer(String customerId) {
+        return store.
+            values().
+            stream().
+            filter(
+                acc -> acc.customerId() == customerId
+            ).toList();
+    }
 }

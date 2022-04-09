@@ -9,4 +9,6 @@ public interface AccountRepository {
     void save(Account account);
 
     List<Transaction> transactions(String accountId);
+
+    List<Account> listForCustomer(String id);
 }
