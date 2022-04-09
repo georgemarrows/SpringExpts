@@ -1,7 +1,6 @@
 package georgemarrows.learnspring.controller;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -37,7 +36,7 @@ public class AccountController {
 	@GetMapping
 	public List<Transaction> get(@RequestParam String customerId) {
 		logger.warn("GET /api/account received " + customerId);
-		return accountService.listTransactions("fake", LocalDate.of(2020, 1, 1), LocalDate.of(2021, 12, 31));
+		return accountService.listTransactions("MYACCOUNT456");
 	}
 
 	@PostMapping

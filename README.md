@@ -28,7 +28,7 @@ To run tests
 # Todos
 - RESOLVED (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
   - Looks like it's a dev env thing. Doesn't leak info when running under integration tests.
-
+- Figure out how to use Spring DI to replace InMemoryAccountRepository with one backed by a database when in production
 
 # Tech notes
 
@@ -37,6 +37,9 @@ To run tests
 - Getting started - https://spring.io/guides/gs/spring-boot/
 - Spring & Gradle - https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/
 - Logging - https://www.baeldung.com/spring-boot-logging
+- Dependency injection
+    - https://stackoverflow.com/questions/34367316/spring-boot-autowired-does-not-work-classes-in-different-package?rq=1
+    - https://stackoverflow.com/questions/24014919/understanding-spring-configuration-class
 
 
 ## DDD & Spring
@@ -45,8 +48,10 @@ To run tests
   Interesting end-to-end analysis from event storming stickies through to Java code
 - [Organizing Layers Using Hexagonal Architecture, DDD, and Spring](https://www.baeldung.com/hexagonal-architecture-ddd-spring)
   Much lighter, more code-focussed example
-- [Strategic Domain-Driven Design](https://dev.to/peholmst/strategic-domain-driven-design-3e87) Epic, book-length (and book quality writing from my initial impression). One to read later. 
-
+- [Strategic Domain-Driven Design](https://dev.to/peholmst/strategic-domain-driven-design-3e87)
+  Book-length (and book quality writing from my initial impression). One to read later. 
+- [Architectural Layers and Modeling Domain Logic](https://lorenzo-dee.blogspot.com/2016/10/architectural-layers-and-modeling.html)
+  Points out that you don't always need a domain model. Some bounded contexts genuinely are just CRUD and anything more than controller + repository is over-engineering.
 
 ## Financial systems
 
@@ -59,11 +64,15 @@ To run tests
 
 This is a thoughtful article on moving beyond simple CRUD for APIs: https://blog.palantir.com/rethinking-crud-for-rest-api-designs-a2a8287dc2af
 
+
 ## Testing microservices
 
 Don't use the test pyramid?
 https://engineering.atspotify.com/2018/01/testing-of-microservices/
 
 ## Java
+New things in Java land since I was last there...
 - Record syntax help cut down on noise for read-only / value classes
 - AssertJ exists. Not sure what advantages are over hamcrest (apart from having a more obvious name!)
+- java.time replaces JodaTime. There's also https://www.threeten.org/threeten-extra/
+- """ multi-line strings have to start with a new line :-(

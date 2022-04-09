@@ -1,8 +1,6 @@
 package georgemarrows.learnspring.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +20,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public List<Transaction> listTransactions(String accountId, LocalDate from, LocalDate to) {
+    public List<Transaction> listTransactions(String accountId) {
         // get account
         // ask account for transactions
-        return Arrays.asList(
-            new Transaction("123", "MYACCOUNT456", "YOURACCOUNT678", BigDecimal.valueOf(100), BigDecimal.valueOf(2100))
-        );
+        // TODO we don't have a good DDD home yet for fetching transactions
+        return accountRepository.transactions(accountId);
     }
 
     public void credit(String toAccountId, String fromAccountId, BigDecimal amount) {
