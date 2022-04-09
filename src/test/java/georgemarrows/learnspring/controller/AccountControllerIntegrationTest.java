@@ -2,6 +2,11 @@ package georgemarrows.learnspring.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +25,12 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void getAccount() throws Exception {
-        ResponseEntity<String> response = template.getForEntity("/api/account?customerId={custId}", String.class, "abcdef");
-        assertThat(response.getBody()).isEqualTo(
-			"[{'transactionId':'123','accountFromId':'MYACCOUNT456','accountToId':'YOURACCOUNT678','amount':100,'currentBalance':2100}]".replace("'", "\"")
-		);
-    }
+		ResponseEntity<String> response = template.getForEntity("/api/account?customerId={custId}", String.class, "abcdef");
+
+		Map<String,Object>[] result = new ObjectMapper().readValue(response.getBody(), HashMap[].class);
+
+		assertThat(result[0].get("amount")).isEqualTo(100);
+	}
 
     @Test
     public void postAccount() throws Exception {

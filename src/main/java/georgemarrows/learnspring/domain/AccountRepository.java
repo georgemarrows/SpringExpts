@@ -7,6 +7,8 @@ public interface AccountRepository {
     Optional<Account> findById(String accountId);
 
     void save(Account account);
-
-    List<Transaction> transactions(String accountId);
+    List<Account> listForCustomer(String id);
+    
+    void save(Transaction transaction);
+    List<Transaction> listTransactionsForAccount(String accountId);
 }

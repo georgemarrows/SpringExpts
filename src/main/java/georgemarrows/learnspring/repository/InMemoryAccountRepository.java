@@ -20,8 +20,8 @@ public class InMemoryAccountRepository implements AccountRepository {
     Map<String, Transaction> txnStore = new HashMap<>();
 
     {
-        var txn = new Transaction("123", "MYACCOUNT456", "YOURACCOUNT678", BigDecimal.valueOf(100), BigDecimal.valueOf(2100));
-        txnStore.put(txn.transactionId(), txn);
+        var txn = Transaction.newCrediting("YOURACCOUNT678", BigDecimal.valueOf(100));
+        txnStore.put(txn.id(), txn);
     }
 
     public Optional<Account> findById(String accountId) {
@@ -32,7 +32,20 @@ public class InMemoryAccountRepository implements AccountRepository {
         store.put(account.id(), account);
     }
 
-    public List<Transaction> transactions(String accountId) {
+    public List<Account> listForCustomer(String customerId) {
+        return store.
+            values().
+            stream().
+            filter(
+                acc -> acc.customerId() == customerId
+            ).toList();
+    }
+ 
+    public void save(Transaction transaction) {
+        txnStore.put(transaction.id(), transaction);
+    }
+
+    public List<Transaction> listTransactionsForAccount(String accountId) {
         return txnStore.
             values().
             stream().
