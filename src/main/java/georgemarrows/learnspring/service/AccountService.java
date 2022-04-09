@@ -27,15 +27,4 @@ public class AccountService {
         return accountRepository.transactions(accountId);
     }
 
-    public void credit(String toAccountId, String fromAccountId, BigDecimal amount) {
-        // from account / to account / txn
-        Account to = getAccount(toAccountId);
-        Account from = getAccount(fromAccountId);
-        to.credit(from, amount);
-        // TODO save the accounts & transaction, transactionally
-    }
-
-    private Account getAccount(String accountId) {
-        return accountRepository.findById(accountId).orElseThrow();
-    }
 }
