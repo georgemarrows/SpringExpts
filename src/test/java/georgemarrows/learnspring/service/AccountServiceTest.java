@@ -40,13 +40,12 @@ public class AccountServiceTest {
     // .. 1 account with correct id
     assertThat(acDetails.size()).isEqualTo(1);
 
-    var acDetail = acDetails.get(0);
-    assertThat(acDetail.accountId()).isEqualTo(createAccountResult.accountId());
-
-    // .. 1 transaction with correct balance
-    assertThat(acDetail.transactions().size()).isEqualTo(1);
-
-    var txn = acDetail.transactions().get(0);
-    assertThat(txn.amount()).isEqualTo(amountToCredit);
+    assertThat(acDetails.get(0))
+      .extracting(
+        ac -> ac.accountId(),
+        ac -> ac.transactions().size(),
+        ac -> ac.transactions().get(0).amount()
+      )
+      .containsExactly(createAccountResult.accountId(), 1, amountToCredit);
   }
 }
