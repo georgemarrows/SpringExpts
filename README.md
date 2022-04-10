@@ -8,11 +8,13 @@ New learning
 - I've never worked on financial applications before - read up & apply where relevant
 
 # How to run
-Builds use Gradle. Code has only be tested on Java 17.
+- Builds use Gradle.
+- Code has only been tested on Java 17. It uses `var` (Java 10) and `record` (Java 14).
+- CI is via Github Actions: https://github.com/georgemarrows/SpringExpts/actions
 
-To run the server
+### To run the server
 - `./gradlew bootRun`
-- Server is at localhost:8080
+- Server is at `localhost:8080`
 - There is a built-in test contact with `customerId=a fixed id for testing`
 - Endpoints are
   - POST /api/account
@@ -29,8 +31,9 @@ To run the server
     Postman example:
     TODO paste image here
 
-To run tests
+### To run tests
 - `./gradlew test`
+
 
 # Outline plan
 - DONE shell / walking skeleton for requests (hardcoded data) + integration tests 
