@@ -46,6 +46,10 @@ public class CustomerService {
 
   public record CreateAccountResult(String accountId) {}
 
+  public Customer findCustomer(String customerId) {
+    return getCustomer(customerId);
+  }
+
   private Customer getCustomer(String customerId) {
     // TODO throw proper exception
     return customerRepository.findById(customerId).orElseThrow();

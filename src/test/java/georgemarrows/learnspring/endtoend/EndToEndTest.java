@@ -3,6 +3,7 @@ package georgemarrows.learnspring.endtoend;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
@@ -29,11 +30,16 @@ public class EndToEndTest {
       "a fixed id for testing"
     );
 
-    Map<String, Object>[] result = new ObjectMapper()
-      .readValue(response.getBody(), HashMap[].class);
+    Map<String, Object> result = new ObjectMapper()
+      .readValue(response.getBody(), HashMap.class);
 
-    // No accounts for this customer
-    assertThat(result.length).isEqualTo(0);
+    assertThat(result)
+      .extracting(
+        r -> r.get("firstName"),
+        r -> r.get("surname"),
+        r -> ((ArrayList) r.get("accountDetails")).size() // no accounts for this customer
+      )
+      .containsExactly("George", "Marrows", 0);
   }
 
   @Test
