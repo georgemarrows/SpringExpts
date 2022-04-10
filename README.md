@@ -26,10 +26,15 @@ New learning
     }
     ```
     Postman example:
-    TODO paste image here
+
+    ![image](https://user-images.githubusercontent.com/5624098/162637876-0600f089-c5ba-4564-a5da-a8edba6edd95.png)
+
+
   - GET /api/account?customerId=???
     Postman example:
-    TODO paste image here
+
+    ![image](https://user-images.githubusercontent.com/5624098/162637970-64910d86-ab0e-4aea-b50f-6152240ed1f4.png)  
+
 
 ### To run tests
 - `./gradlew test`
