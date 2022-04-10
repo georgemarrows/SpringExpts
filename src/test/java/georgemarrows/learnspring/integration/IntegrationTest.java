@@ -1,4 +1,4 @@
-package georgemarrows.learnspring.controller;
+package georgemarrows.learnspring.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AccountControllerIntegrationTest {
+public class IntegrationTest {
 
 	@Autowired
 	private TestRestTemplate template;
