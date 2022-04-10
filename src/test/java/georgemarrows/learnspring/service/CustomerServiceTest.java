@@ -58,7 +58,7 @@ public class CustomerServiceTest {
       accountRepository
     );
 
-    // When we create an account for the customer with zero balance
+    // When we create an account for the customer with non-zero balance
     cs.createAccount(c.id(), amountToCredit);
 
     // .. then an account is created
