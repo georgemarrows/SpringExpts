@@ -30,8 +30,12 @@ public class CustomerService {
   public CreateAccountResult createAccount(
     String customerId,
     BigDecimal initialCredit
-  ) {
+  ) throws NoSuchCustomer {
     Customer c = getCustomer(customerId);
+    if (c == null) {
+      throw new NoSuchCustomer();
+    }
+
     Account a = c.createAccount();
     Transaction t = a.credit(initialCredit);
 
@@ -43,6 +47,8 @@ public class CustomerService {
     }
     return new CreateAccountResult(a.id());
   }
+
+  public class NoSuchCustomer extends Exception {}
 
   public record CreateAccountResult(String accountId) {}
 

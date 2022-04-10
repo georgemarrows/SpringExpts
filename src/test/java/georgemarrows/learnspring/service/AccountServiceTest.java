@@ -21,7 +21,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void canListAccountsForCustomer() {
+  public void canListAccountsForCustomer() throws Exception {
     final BigDecimal amountToCredit = new BigDecimal(1000);
 
     // Given a new account for a customer

@@ -53,7 +53,7 @@ public class EndToEndTest {
 
     assertThat(response)
       .extracting("statusCode", "body")
-      .containsExactly(HttpStatus.NOT_FOUND, "No customer found");
+      .containsExactly(HttpStatus.NOT_FOUND, "No such customer");
   }
 
   @Test
@@ -69,6 +69,21 @@ public class EndToEndTest {
     Map<String, Object> res = new ObjectMapper()
       .readValue(response.getBody(), HashMap.class);
     assertThat(res.get("accountId")).isNotNull();
+  }
+
+  @Test
+  public void createAccountNoSuchCustomer() throws Exception {
+    var response = post(
+      "/api/account",
+      "customerId",
+      "there isn't a customer with this id",
+      "initialCredit",
+      "0"
+    );
+
+    assertThat(response)
+      .extracting("statusCode", "body")
+      .containsExactly(HttpStatus.NOT_FOUND, "No such customer");
   }
 
   private ResponseEntity<String> post(String url, String... jsonBody)
