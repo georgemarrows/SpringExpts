@@ -27,9 +27,9 @@ public class Account {
         return id;
     }
 
-	public String customerId() {
-		return customerId;
-	}
+    public String customerId() {
+        return customerId;
+    }
 
     public Transaction credit(BigDecimal amount) {
         // TODO accounting: this should reference the account being debited!

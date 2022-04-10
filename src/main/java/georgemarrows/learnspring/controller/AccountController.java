@@ -18,36 +18,35 @@ import georgemarrows.learnspring.service.AccountService;
 import georgemarrows.learnspring.service.CustomerService;
 import georgemarrows.learnspring.service.CustomerService.CreateAccountResult;
 
-
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
 
-	Logger logger = LoggerFactory.getLogger(AccountController.class);
+    Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-	private final AccountService accountService;
-	private final CustomerService customerService;
+    private final AccountService accountService;
+    private final CustomerService customerService;
 
-	@Autowired
-	public AccountController(AccountService accountService, CustomerService customerService) {
+    @Autowired
+    public AccountController(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
         this.customerService = customerService;
     }
 
-	@GetMapping
-	public List<Transaction> get(@RequestParam String customerId) {
-		logger.warn("GET /api/account received " + customerId);
-		return accountService.listTransactions(Transaction.dummyFromAccountId);
-	}
+    @GetMapping
+    public List<Transaction> get(@RequestParam String customerId) {
+        logger.warn("GET /api/account received " + customerId);
+        return accountService.listTransactions(Transaction.dummyFromAccountId);
+    }
 
-	@PostMapping
-	public CreateAccountResult create(@RequestBody CreateAccountRequest account) {
-		// TODO this uses customerService but is on accountContoller
-		logger.warn("POST /api/account received " + account);
-		CreateAccountResult res = customerService.createAccount(account.customerId, account.initialCredit);
-		return res;
-	}
+    @PostMapping
+    public CreateAccountResult create(@RequestBody CreateAccountRequest account) {
+        // TODO this uses customerService but is on accountContoller
+        logger.warn("POST /api/account received " + account);
+        CreateAccountResult res = customerService.createAccount(account.customerId, account.initialCredit);
+        return res;
+    }
 
-	public record CreateAccountRequest(String customerId, BigDecimal initialCredit) {
-	}
+    public record CreateAccountRequest(String customerId, BigDecimal initialCredit) {
+    }
 }
