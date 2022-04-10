@@ -4,14 +4,30 @@ Catch-up
 
 New learning
 - I've never used Spring - first steps with this
+- I'm not familiar with DDD - let's understand some code patterns here
 - I've never worked on financial applications before - read up & apply where relevant
 
 # How to run
-Builds use Gradle.
+Builds use Gradle. Code has only be tested on Java 17.
 
 To run the server
-- In this directory, run `./gradlew bootRun`, making sure you're using a Java 17 JDK
-- Go to http://localhost:8080/
+- `./gradlew bootRun`
+- Server is at localhost:8080
+- There is a built-in test contact with `customerId=a fixed id for testing`
+- Endpoints are
+  - POST /api/account
+    expects application/json body in the form
+    ```
+    {
+      customerId: XXX,
+      initialCredit: 1000
+    }
+    ```
+    Postman example:
+    TODO paste image here
+  - GET /api/account?customerId=???
+    Postman example:
+    TODO paste image here
 
 To run tests
 - `./gradlew test`
@@ -19,18 +35,44 @@ To run tests
 # Outline plan
 - DONE shell / walking skeleton for requests (hardcoded data) + integration tests 
 - DONE CI/CD using Github Actions
-- notes on patterns for financial applications (accounts / transactions)
-- flesh out domain model + unit/integration tests
+- DONE notes on patterns for financial applications (accounts / transactions)
+- DONE flesh out domain model + unit/integration tests
 - (maybe) simple UI
 - (maybe) separate services
 - (maybe) report coverage to Codecov
 
-# Todos
-- RESOLVED (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
-  - Looks like it's a dev env thing. Doesn't leak info when running under integration tests.
-- Figure out how to use Spring DI to replace InMemoryAccountRepository with one backed by a database when in production
+# Challenges
 
-# Tech notes
+## Retrospective
+1. Learning (the beginnings of) Spring here was tricky. It's a big beast. Their getting started info is useful, but then there's a giant leap to their Javadoc, which is thin and not at all oriented around how to use it. Fortunately [Baeldung](https://www.baeldung.com/) does a good job of stepping in. StackOverflow is very helpful too.
+2. I learnt even less of DDD, and definitely only at the "tactical" code level. ("Strategic"/"tactical" terminology from [this article](https://dev.to/peholmst/tactical-domain-driven-design-17dp).) I'm beginning to get a sense of "why DDD?" at the level of code, and it's obvious that the clean domain models could be very useful. But issues like aggregates are still a mystery.
+   
+   It's interesting to compare the mutable DDD domain model with the immutable model suggested in [Boundaries](https://www.destroyallsoftware.com/talks/boundaries) by Gary Bernhardt. Immutable objects can be a lot easier to understand. The overall structure is pretty similar otherwise, both being careful to separate the communications technology from the internal domain model.
+
+   Don't get DDD-obsessed: [this](https://lorenzo-dee.blogspot.com/2016/10/architectural-layers-and-modeling.html) is a useful corrective. CRUD is the right solution for many subsystems.
+
+3. Turning to the code, I'm not happy about how services & repositories are a bit tangled, with eg `CustomerService` talking to `AccountRepository` as well as `CustomerRepository`. I doubtless need to understand the use of aggregates better.
+
+4. Good to see a couple of shortcuts in modern Java:
+   - Using `record` for easy de/serialising of JSON in controllers, or returning multiple results from a method
+   - AssertJ's `extracting` makes some asserts much more readable
+
+## Open issues
+1. Code is probably insufficiently commented. I'm not a fan of large swathes of comments doc'ing the simple or obvious, and none of the code here is at all algorithmically complicated or contains hidden gotchas or important cross-references. Those are the kind of things I would document.
+
+2. I've baked in `InMemoryAccountRepository`, which should be switchable for a persistent, database-backed repository. I haven't spent time yet figuring out how to use Spring DI to do that. There's likely to be a few knock-ons on services and perhaps the domain model too.
+   - As a side effect of not integrating with a database or ORM, I'm not yet sure how to make `CustomerService.createAccount()` transactional. Pretty important!
+  
+3. I don't yet understand how DDD's aggregates would handle unbounded data like transactions for an account.
+
+4. Money comes from nowhere! What account should be debited when the customer's new account is credited. This made me realise I don't know how banks track money flowing into their business. That's why `Transaction.dummyFromAccountId` exists.
+
+## Resolved
+- (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
+  - Looks like it's a dev env thing. Doesn't leak info when running under integration tests.
+
+
+# Background reading
 
 ## Spring
 
@@ -52,6 +94,8 @@ To run tests
   Book-length (and book quality writing from my initial impression). One to read later. 
 - [Architectural Layers and Modeling Domain Logic](https://lorenzo-dee.blogspot.com/2016/10/architectural-layers-and-modeling.html)
   Points out that you don't always need a domain model. Some bounded contexts genuinely are just CRUD and anything more than controller + repository is over-engineering.
+- [Domain Driven Design Quickly](https://www.infoq.com/minibooks/domain-driven-design-quickly/)
+  Not downloaded yet.
 
 ## Financial systems
 
@@ -70,8 +114,10 @@ This is a thoughtful article on moving beyond simple CRUD for APIs: https://blog
 Don't use the test pyramid?
 https://engineering.atspotify.com/2018/01/testing-of-microservices/
 
+
 ## Java
-New things in Java land since I was last there...
+New things in Java land since I was last here...
+- `var` declarations
 - Record syntax help cut down on noise for read-only / value classes
 - AssertJ exists. Not sure what advantages are over hamcrest (apart from having a more obvious name!)
 - java.time replaces JodaTime. There's also https://www.threeten.org/threeten-extra/

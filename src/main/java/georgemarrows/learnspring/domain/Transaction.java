@@ -13,7 +13,8 @@ public class Transaction {
   public static final String dummyFromAccountId = "slush fund"; // TODO
 
   // TODO these seem to need to be public to allow them to be serialised
-  // automatically by @RestController. That's bad!
+  // automatically by @RestController. That's bad! Answer is probably that I
+  // shouldn't be directly serialising Transaction objects.
   public String transactionId;
   public String accountFromId;
   public String accountToId;
