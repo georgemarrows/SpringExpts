@@ -37,13 +37,7 @@ public class AccountController {
   }
 
   @GetMapping
-  public List<Transaction> get(@RequestParam String customerId) {
-    logger.warn("GET /api/account received " + customerId);
-    return accountService.listTransactions(Transaction.dummyFromAccountId);
-  }
-
-  @GetMapping("/new")
-  public List<AccountDetail> getNew(@RequestParam String customerId) {
+  public List<AccountDetail> get(@RequestParam String customerId) {
     logger.warn("GET /api/account received " + customerId);
 
     // TODO remove this
@@ -51,10 +45,7 @@ public class AccountController {
     // balance, and transactions of the accounts.
     // Customer c = customerService.findCustomer(customerId);
 
-    List<AccountDetail> accountDetails = accountService.listAccountsForCustomer(
-      customerId
-    );
-    return accountDetails;
+    return accountService.listAccountsForCustomer(customerId);
   }
 
   @PostMapping

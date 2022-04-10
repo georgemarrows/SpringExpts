@@ -22,23 +22,9 @@ public class EndToEndTest {
   private TestRestTemplate template;
 
   @Test
-  public void getAccount() throws Exception {
-    ResponseEntity<String> response = template.getForEntity(
-      "/api/account?customerId={custId}",
-      String.class,
-      "abcdef"
-    );
-
-    Map<String, Object>[] result = new ObjectMapper()
-      .readValue(response.getBody(), HashMap[].class);
-
-    assertThat(result[0].get("amount")).isEqualTo(100);
-  }
-
-  @Test
   public void getAccountDetails() throws Exception {
     ResponseEntity<String> response = template.getForEntity(
-      "/api/account/new?customerId={custId}",
+      "/api/account?customerId={custId}",
       String.class,
       "a fixed id for testing"
     );
