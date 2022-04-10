@@ -1,4 +1,4 @@
-package georgemarrows.learnspring.integration;
+package georgemarrows.learnspring.endtoend;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class IntegrationTest {
+public class EndToEndTest {
 
 	@Autowired
 	private TestRestTemplate template;
