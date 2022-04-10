@@ -11,13 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/account")
@@ -38,23 +38,26 @@ public class AccountController {
   }
 
   @GetMapping
-  public AccountListResult get(@RequestParam String customerId) {
+  public ResponseEntity<?> get(@RequestParam String customerId) {
     logger.warn("GET /api/account received " + customerId);
 
     Customer c = customerService.findCustomer(customerId);
 
     if (c == null) {
-      throw new ResponseStatusException(
-        HttpStatus.NOT_FOUND,
-        "Customer not found"
-      );
+      return ResponseEntity
+        .status(HttpStatus.NOT_FOUND)
+        .body("No customer found");
     }
 
-    return new AccountListResult(
-      c.firstName(),
-      c.surname(),
-      accountService.listAccountsForCustomer(customerId)
-    );
+    return ResponseEntity
+      .status(HttpStatus.OK)
+      .body(
+        new AccountListResult(
+          c.firstName(),
+          c.surname(),
+          accountService.listAccountsForCustomer(customerId)
+        )
+      );
   }
 
   public record AccountListResult(
