@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import georgemarrows.learnspring.domain.Transaction;
 import georgemarrows.learnspring.service.AccountService;
+import georgemarrows.learnspring.service.CustomerService;
+import georgemarrows.learnspring.service.CustomerService.CreateAccountResult;
 
 
 @RestController
@@ -24,14 +26,13 @@ public class AccountController {
 	Logger logger = LoggerFactory.getLogger(AccountController.class);
 
 	private final AccountService accountService;
+	private final CustomerService customerService;
 
 	@Autowired
-	public AccountController(AccountService accountService) {
+	public AccountController(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
+        this.customerService = customerService;
     }
-
-	public record Account(String customerId, BigDecimal initialCredit) {
-	}
 
 	@GetMapping
 	public List<Transaction> get(@RequestParam String customerId) {
@@ -40,8 +41,13 @@ public class AccountController {
 	}
 
 	@PostMapping
-	public String set(@RequestBody Account account) {
+	public CreateAccountResult create(@RequestBody CreateAccountRequest account) {
+		// TODO this uses customerService but is on accountContoller
 		logger.warn("POST /api/account received " + account);
-		return "success";
+		CreateAccountResult res = customerService.createAccount(account.customerId, account.initialCredit);
+		return res;
+	}
+
+	public record CreateAccountRequest(String customerId, BigDecimal initialCredit) {
 	}
 }
