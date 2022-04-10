@@ -30,7 +30,7 @@ public class CustomerService {
   public CreateAccountResult createAccount(
     String customerId,
     BigDecimal initialCredit
-  ) {
+  ) throws NoSuchCustomer {
     Customer c = getCustomer(customerId);
     Account a = c.createAccount();
     Transaction t = a.credit(initialCredit);
@@ -44,10 +44,17 @@ public class CustomerService {
     return new CreateAccountResult(a.id());
   }
 
+  public class NoSuchCustomer extends Exception {}
+
   public record CreateAccountResult(String accountId) {}
 
-  private Customer getCustomer(String customerId) {
-    // TODO throw proper exception
-    return customerRepository.findById(customerId).orElseThrow();
+  public Customer findCustomer(String customerId) throws NoSuchCustomer {
+    return getCustomer(customerId);
+  }
+
+  private Customer getCustomer(String customerId) throws NoSuchCustomer {
+    return customerRepository
+      .findById(customerId)
+      .orElseThrow(() -> new NoSuchCustomer());
   }
 }

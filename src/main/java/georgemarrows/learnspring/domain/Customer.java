@@ -34,6 +34,14 @@ public class Customer {
     return id;
   }
 
+  public String firstName() {
+    return firstName;
+  }
+
+  public String surname() {
+    return surname;
+  }
+
   public Account createAccount() {
     // In reality, there will be a lot of extra info and checks here
     // - what type of account: current, or some kind of savings account?

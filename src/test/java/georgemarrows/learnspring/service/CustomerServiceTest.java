@@ -24,7 +24,7 @@ public class CustomerServiceTest {
   }
 
   @Test
-  public void createAccountWithZeroBalance() {
+  public void createAccountWithZeroBalance() throws Exception {
     // Given
     CustomerService cs = new CustomerService(
       customerRepository,
@@ -49,7 +49,7 @@ public class CustomerServiceTest {
   }
 
   @Test
-  public void createAccountWithNonZeroBalance() {
+  public void createAccountWithNonZeroBalance() throws Exception {
     final BigDecimal amountToCredit = new BigDecimal(1000);
 
     // Given
@@ -58,7 +58,7 @@ public class CustomerServiceTest {
       accountRepository
     );
 
-    // When we create an account for the customer with zero balance
+    // When we create an account for the customer with non-zero balance
     cs.createAccount(c.id(), amountToCredit);
 
     // .. then an account is created
