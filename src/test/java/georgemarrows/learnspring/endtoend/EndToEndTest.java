@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -40,6 +41,23 @@ public class EndToEndTest {
         r -> ((ArrayList) r.get("accountDetails")).size() // no accounts for this customer
       )
       .containsExactly("George", "Marrows", 0);
+  }
+
+  @Test
+  public void getAccountDetailsNoSuchCustomer() throws Exception {
+    ResponseEntity<String> response = template.getForEntity(
+      "/api/account?customerId={custId}",
+      String.class,
+      "there isn't a customer with this id"
+    );
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    // TODO we should explain why this is a 404, but the reason isn't getting passed
+    // out, which seems contrary to https://stackoverflow.com/a/62824123/2102842
+    // Map<String, Object> result = new ObjectMapper()
+    //   .readValue(response.getBody(), HashMap.class);
+
+    // assertThat(result.get("message")).isEqualTo("Customer not found");
   }
 
   @Test

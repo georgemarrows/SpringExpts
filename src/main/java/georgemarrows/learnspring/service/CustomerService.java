@@ -52,6 +52,6 @@ public class CustomerService {
 
   private Customer getCustomer(String customerId) {
     // TODO throw proper exception
-    return customerRepository.findById(customerId).orElseThrow();
+    return customerRepository.findById(customerId).orElse(null);
   }
 }
