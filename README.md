@@ -55,11 +55,11 @@ New learning
 1. Learning (the beginnings of) Spring here was tricky. It's a big beast. Their getting started info is useful, but then there's a giant leap to their Javadoc, which is thin and not at all oriented around how to use it. Fortunately [Baeldung](https://www.baeldung.com/) does a good job of stepping in. StackOverflow is very helpful too.
 2. I learnt even less of DDD, and definitely only at the "tactical" code level. ("Strategic"/"tactical" terminology from [this article](https://dev.to/peholmst/tactical-domain-driven-design-17dp).) I'm beginning to get a sense of "why DDD?" at the level of code, and it's obvious that the clean domain models could be very useful. But issues like aggregates are still a mystery.
    
-   It's interesting to compare the mutable DDD domain model with the immutable model suggested in [Boundaries](https://www.destroyallsoftware.com/talks/boundaries) by Gary Bernhardt. Immutable objects can be a lot easier to understand. The overall structure is pretty similar otherwise, both being careful to separate the communications technology from the internal domain model.
+   It's interesting to compare the mutable DDD domain model with the immutable model suggested in [Boundaries](https://www.destroyallsoftware.com/talks/boundaries) by Gary Bernhardt. Immutable objects can be a lot easier to understand. Putting aside mutability, the overall structure is similar, both being careful to separate the communications technology (database, other services) from the internal domain model.
 
-   Don't get DDD-obsessed: [this](https://lorenzo-dee.blogspot.com/2016/10/architectural-layers-and-modeling.html) is a useful corrective. CRUD is the right solution for many subsystems.
+   [This](https://lorenzo-dee.blogspot.com/2016/10/architectural-layers-and-modeling.html) is a useful corrective to getting DDD-obsessed. CRUD is the right solution for many subsystems ("bounded contexts").
 
-3. Turning to the code, I'm not happy about how services & repositories are a bit tangled, with eg `CustomerService` talking to `AccountRepository` as well as `CustomerRepository`. I doubtless need to understand the use of aggregates better.
+3. Turning to the code, I'm not happy about how services & repositories are overly tangled, with eg `CustomerService` talking to `AccountRepository` as well as `CustomerRepository`. I doubtless need to understand the use of aggregates better.
 
 4. Good to see a couple of shortcuts in modern Java:
    - Using `record` for easy de/serialising of JSON in controllers, or returning multiple results from a method
