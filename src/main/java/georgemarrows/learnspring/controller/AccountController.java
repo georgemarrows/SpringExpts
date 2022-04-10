@@ -44,18 +44,18 @@ public class AccountController {
   public ResponseEntity<?> get(@RequestParam String customerId) {
     logger.warn("GET /api/account received " + customerId);
 
-    Customer c = customerService.findCustomer(customerId);
+    try {
+      var c = customerService.findCustomer(customerId);
+      var res = new AccountListResult(
+        c.firstName(),
+        c.surname(),
+        accountService.listAccountsForCustomer(customerId)
+      );
 
-    if (c == null) {
+      return ResponseEntity.status(HttpStatus.OK).body(res);
+    } catch (NoSuchCustomer e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NO_SUCH_CUSTOMER);
     }
-
-    var res = new AccountListResult(
-      c.firstName(),
-      c.surname(),
-      accountService.listAccountsForCustomer(customerId)
-    );
-    return ResponseEntity.status(HttpStatus.OK).body(res);
   }
 
   public record AccountListResult(
