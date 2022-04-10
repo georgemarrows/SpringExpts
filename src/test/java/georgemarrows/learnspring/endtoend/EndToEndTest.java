@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndToEndTest {
 
+  private static final String KNOWN_CUSTOMER_ID = "a fixed id for testing";
+
   @Autowired
   private TestRestTemplate template;
 
@@ -28,7 +30,7 @@ public class EndToEndTest {
     ResponseEntity<String> response = template.getForEntity(
       "/api/account?customerId={custId}",
       String.class,
-      "a fixed id for testing"
+      KNOWN_CUSTOMER_ID
     );
 
     Map<String, Object> result = new ObjectMapper()
@@ -61,7 +63,7 @@ public class EndToEndTest {
     var response = post(
       "/api/account",
       "customerId",
-      "a fixed id for testing",
+      KNOWN_CUSTOMER_ID,
       "initialCredit",
       "0"
     );
