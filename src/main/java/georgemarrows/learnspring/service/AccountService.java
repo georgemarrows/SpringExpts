@@ -1,9 +1,7 @@
 package georgemarrows.learnspring.service;
 
-import georgemarrows.learnspring.domain.Account;
 import georgemarrows.learnspring.domain.AccountRepository;
 import georgemarrows.learnspring.domain.Transaction;
-import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
