@@ -26,7 +26,7 @@ public class CustomerService {
         this.accountRepository = accountRepository;
     }
 
-    public void createAccount(String customerId, BigDecimal initialCredit) {
+    public CreateAccountResult createAccount(String customerId, BigDecimal initialCredit) {
         Customer c = getCustomer(customerId);
         Account a = c.createAccount();
         Transaction t = a.credit(initialCredit);
@@ -37,7 +37,10 @@ public class CustomerService {
         if (t != null) {
             accountRepository.save(t);
         }
+        return new CreateAccountResult(a.id());
     }
+
+    public record CreateAccountResult(String accountId) {}
 
     private Customer getCustomer(String customerId) {
         // TODO throw proper exception

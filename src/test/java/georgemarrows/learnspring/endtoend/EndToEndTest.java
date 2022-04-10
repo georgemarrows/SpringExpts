@@ -1,4 +1,4 @@
-package georgemarrows.learnspring.controller;
+package georgemarrows.learnspring.endtoend;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AccountControllerIntegrationTest {
+public class EndToEndTest {
 
 	@Autowired
 	private TestRestTemplate template;
@@ -33,18 +33,31 @@ public class AccountControllerIntegrationTest {
 	}
 
     @Test
-    public void postAccount() throws Exception {
+    public void createAccount() throws Exception {
+		var response = post("/api/account",
+							"customerId", "a fixed id for testing",
+							"initialCredit", "0");
+
+		Map<String,Object> res = new ObjectMapper().readValue(response.getBody(), HashMap.class);
+		assertThat(res.get("accountId")).isNotNull();
+    }
+
+	private ResponseEntity<String> post(String url, String... jsonBody) throws Exception {
+		if (jsonBody.length % 2 !=0) {
+			throw new Exception("can only post key/value pairs");
+		}
+		
 		// See https://www.baeldung.com/spring-resttemplate-post-json
 		var headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		var accountJson = new JSONObject();
-		accountJson.put("id", 1);
-		accountJson.put("name", "John");
+		var json = new JSONObject();
+		for (int i = 0; i < jsonBody.length; i += 2) {
+			json.put(jsonBody[i], jsonBody[i+1]);
+		}
 
-		var request = new HttpEntity<String>(accountJson.toString(), headers);
+		var request = new HttpEntity<String>(json.toString(), headers);
 
-        var response = template.postForEntity("/api/account", request, String.class);
-        assertThat(response.getBody()).isEqualTo("success");
-    }
+        return template.postForEntity("/api/account", request, String.class);
+	}
 }

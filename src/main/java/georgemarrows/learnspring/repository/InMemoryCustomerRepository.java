@@ -15,6 +15,11 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     Map<String, Customer> store = new HashMap<>();
 
+    {
+        var c = Customer.newWithNameAndId("George", "Marrows", "a fixed id for testing");
+        store.put(c.id(), c);
+    }
+
     public Optional<Customer> findById(String customerId) {
         return Optional.ofNullable(store.get(customerId));
     }

@@ -8,14 +8,18 @@ public class Customer {
     private String firstName;
     private String surname;
 
-    public Customer(String firstName, String surname) {
-        this.id = UUID.randomUUID().toString();
+    private Customer(String firstName, String surname, String id) {
+        this.id = id;
         this.firstName = firstName;
         this.surname = surname;
     }
 
     public static Customer newWithName(String firstName, String surname) {
-        return new Customer(firstName, surname);
+        return Customer.newWithNameAndId(firstName, surname, UUID.randomUUID().toString());
+    }
+    
+    public static Customer newWithNameAndId(String firstName, String surname, String id) {
+        return new Customer(firstName, surname, id);
     }
     
     public String id() {
