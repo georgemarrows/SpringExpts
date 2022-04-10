@@ -1,6 +1,5 @@
 package georgemarrows.learnspring.controller;
 
-import georgemarrows.learnspring.domain.Customer;
 import georgemarrows.learnspring.service.AccountService;
 import georgemarrows.learnspring.service.AccountService.AccountDetail;
 import georgemarrows.learnspring.service.CustomerService;
