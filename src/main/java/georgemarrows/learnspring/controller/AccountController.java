@@ -1,7 +1,9 @@
 package georgemarrows.learnspring.controller;
 
+import georgemarrows.learnspring.domain.Customer;
 import georgemarrows.learnspring.domain.Transaction;
 import georgemarrows.learnspring.service.AccountService;
+import georgemarrows.learnspring.service.AccountService.AccountDetail;
 import georgemarrows.learnspring.service.CustomerService;
 import georgemarrows.learnspring.service.CustomerService.CreateAccountResult;
 import java.math.BigDecimal;
@@ -38,6 +40,21 @@ public class AccountController {
   public List<Transaction> get(@RequestParam String customerId) {
     logger.warn("GET /api/account received " + customerId);
     return accountService.listTransactions(Transaction.dummyFromAccountId);
+  }
+
+  @GetMapping("/new")
+  public List<AccountDetail> getNew(@RequestParam String customerId) {
+    logger.warn("GET /api/account received " + customerId);
+
+    // TODO remove this
+    // Another Endpoint will output the user information showing Name, Surname,
+    // balance, and transactions of the accounts.
+    // Customer c = customerService.findCustomer(customerId);
+
+    List<AccountDetail> accountDetails = accountService.listAccountsForCustomer(
+      customerId
+    );
+    return accountDetails;
   }
 
   @PostMapping

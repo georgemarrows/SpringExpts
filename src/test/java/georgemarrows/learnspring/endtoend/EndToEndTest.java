@@ -36,6 +36,21 @@ public class EndToEndTest {
   }
 
   @Test
+  public void getAccountDetails() throws Exception {
+    ResponseEntity<String> response = template.getForEntity(
+      "/api/account/new?customerId={custId}",
+      String.class,
+      "a fixed id for testing"
+    );
+
+    Map<String, Object>[] result = new ObjectMapper()
+      .readValue(response.getBody(), HashMap[].class);
+
+    // No accounts for this customer
+    assertThat(result.length).isEqualTo(0);
+  }
+
+  @Test
   public void createAccount() throws Exception {
     var response = post(
       "/api/account",
