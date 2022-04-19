@@ -53,6 +53,7 @@ New learning
 
 ## Retrospective
 1. Learning (the beginnings of) Spring here was tricky. It's a big beast. Their getting started info is useful, but then there's a giant leap to their Javadoc, which is thin and not at all oriented around how to use it. Fortunately [Baeldung](https://www.baeldung.com/) does a good job of stepping in. StackOverflow is very helpful too.
+
 2. I learnt even less of DDD, and definitely only at the "tactical" code level. ("Strategic"/"tactical" terminology from [this article](https://dev.to/peholmst/tactical-domain-driven-design-17dp).) I'm beginning to get a sense of "why DDD?" at the level of code, and it's obvious that the clean domain models could be very useful. But issues like aggregates are still a mystery.
    
    It's interesting to compare the mutable DDD domain model with the immutable model suggested in [Boundaries](https://www.destroyallsoftware.com/talks/boundaries) by Gary Bernhardt. Immutable objects can be a lot easier to understand. Putting aside mutability, the overall structure is similar, both being careful to separate the communications technology (database, other services) from the internal domain model.
@@ -65,6 +66,10 @@ New learning
    - Using `record` for easy de/serialising of JSON in controllers, or returning multiple results from a method
    - AssertJ's `extracting` makes some asserts much more readable
 
+5. Dividing up code by packages `controller` / `repository` / `domain` is prioritising the language of the technical solution over the language of the problem (`customer`, `account`). This is ok in a small codebase like this one, but it's terrible in a larger monolith. I've worked with large codebases where the first dividing lines in the code were similarly technology driven, and it makes the problem domain hard to see in the code. I spent time with the team of one of these codebases moving the top-level splits towards being domain-first, and that was very helpful.
+
+   On the other hand, the current package structure is helpful for slicing into the standard DDD layers.
+
 ## Open issues
 1. Code is probably insufficiently commented. I'm not a fan of large swathes of comments doc'ing the simple or obvious, and none of the code here is at all algorithmically complicated or contains hidden gotchas or important cross-references. Those are the kind of things I would document.
 
@@ -73,7 +78,7 @@ New learning
   
 3. I don't yet understand how DDD's aggregates would handle unbounded data like transactions for an account.
 
-4. Money comes from nowhere! What account should be debited when the customer's new account is credited. This made me realise I don't know how banks track money flowing into their business. That's why `Transaction.dummyFromAccountId` exists.
+4. Money comes from nowhere! What account should be debited when the customer's new account is credited? This made me realise I don't know how banks track money flowing into their business. That's why `Transaction.dummyFromAccountId` exists.
 
 5. Money should be a DDD [value object](https://dev.to/peholmst/tactical-domain-driven-design-17dp#value-objects)
 
