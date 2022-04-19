@@ -75,6 +75,10 @@ New learning
 
 4. Money comes from nowhere! What account should be debited when the customer's new account is credited. This made me realise I don't know how banks track money flowing into their business. That's why `Transaction.dummyFromAccountId` exists.
 
+5. Money should be a DDD [value object](https://dev.to/peholmst/tactical-domain-driven-design-17dp#value-objects)
+
+6. Nothing on authentication or authorisation
+
 ## Resolved
 - (Security) Spring leaks a lot of internal implementation information if you post data in the wrong format (eg no body) - how to turn this off? 
   - Looks like it's a dev env thing. Doesn't leak info when running under integration tests.
